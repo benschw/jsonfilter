@@ -21,7 +21,8 @@ cli tool to grab values out of a json block
 		"Parents":[
 			"Gomez",
 			"Morticia"
-		],"Address":{
+		],
+		"Address":{
 			"Street":"0001 Cemetery Lane"
 		}
 	}
