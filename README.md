@@ -61,7 +61,7 @@ cli tool to grab values out of a json block
 	spiders
 
 
-	$ cat data.json | jsonfilter Address | jsonfilter Street
+	$ cat data.json | jsonfilter -json Address | jsonfilter Street
 	0001 Cemetery Lane
 
 
@@ -72,9 +72,11 @@ cli tool to grab values out of a json block
 	not found
 
 
+	$ cat data.json | jsonfilter -json Address.Street
+	"0001 Cemetery Lane"
 
 
-### notes
-- multi line input?
-- error handling
+
+### misc
+- multi line input
 
