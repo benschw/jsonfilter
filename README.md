@@ -60,6 +60,10 @@ cli tool to grab values out of a json block
 	playing with her headless Marie Antoinette doll
 	spiders
 
+	$ cat data.json | jsonfilter -json -values Parents | xargs jsonfilter Name
+	Gomez
+	Morticia
+
 
 	$ cat data.json | jsonfilter -json Address | jsonfilter Street
 	0001 Cemetery Lane
