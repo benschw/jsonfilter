@@ -39,7 +39,7 @@ cli tool to grab values out of a json block
 	}
 
 
-## todo
+## more examples
 
 	$ cat data.json | jsonfilter Address
 	{"Street":"0001 Cemetery Lane","City": "New York","State":"New York"}
@@ -81,6 +81,4 @@ cli tool to grab values out of a json block
 
 
 
-### misc
-- multi line input
 

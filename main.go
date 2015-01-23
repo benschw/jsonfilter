@@ -104,6 +104,16 @@ func main() {
 		verbose = debug
 	}
 
+	stat, _ := os.Stdin.Stat()
+	if (stat.Mode() & os.ModeCharDevice) == 0 {
+		if *debug {
+			log.Println("stdin content detected")
+		}
+	} else {
+		flag.Usage()
+		os.Exit(1)
+	}
+
 	selector := ""
 	for i := 0; i < flag.NArg(); i++ {
 		selector += flag.Arg(i)
