@@ -3,40 +3,50 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
+	"io"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 )
 
 var _ = log.Print
 
-func parseBytes(b []byte) (interface{}, error) {
+func parseReader(in io.Reader) (interface{}, error) {
 	var obj interface{}
 
-	err := json.Unmarshal(b, &obj)
+	err := json.NewDecoder(in).Decode(&obj)
 
 	return obj, err
 }
 
-func formatForJsonDisplay(i interface{}) (string, error) {
-	b, err := json.Marshal(i)
+func formatForJsonDisplay(i interface{}, pretty bool) (string, error) {
+	var b []byte
+	var err error
+
+	if pretty {
+		b, err = json.MarshalIndent(i, "", "    ")
+	} else {
+		b, err = json.Marshal(i)
+	}
 	if err != nil {
 		return "", err
 	}
 	return string(b[:]), nil
 }
-func formatForDisplay(i interface{}, asJson bool) (string, error) {
+func formatForDisplay(i interface{}, asJson bool, asValues bool, pretty bool) (string, error) {
 	if asJson {
-		return formatForJsonDisplay(i)
+		return formatForJsonDisplay(i, pretty)
 	} else {
 		switch v := i.(type) {
 		case int:
-			return formatForJsonDisplay(i)
+			return formatForJsonDisplay(i, false)
 		case float64:
-			return formatForJsonDisplay(i)
+			return formatForJsonDisplay(i, false)
 		case bool:
-			return formatForJsonDisplay(i)
+			return formatForJsonDisplay(i, false)
 		case string:
 			return fmt.Sprintf("%s", v), nil
 		case []interface{}:
@@ -71,13 +81,56 @@ func selectValue(obj interface{}, selector string) (interface{}, error) {
 }
 
 func main() {
-	b := []byte(`{"Name":"Wednesday","Age":6,"Parents":["Gomez","Morticia"]}`)
+	log.SetFlags(0)
+	log.SetOutput(os.Stderr)
 
-	obj, err := parseBytes(b)
-	if err != nil {
-		// http://www.goinggo.net/2013/11/using-log-package-in-go.html
-		panic(err)
+	flag.Usage = func() {
+		fmt.Printf("Usage: jsonfilter [options] selector-string\n\nOptions:\n")
+		flag.PrintDefaults()
 	}
 
-	fmt.Printf("%+v", obj)
+	asJson := flag.Bool("json", false, "display output as json")
+	pretty := flag.Bool("pretty", false, "display pretty json (sets -json=true)")
+	asValues := flag.Bool("each", false, "display each value of selected structure on its own line")
+	verbose := flag.Bool("v", false, "display errors")
+	debug := flag.Bool("vv", false, "display errors and info")
+
+	flag.Parse()
+
+	if *pretty {
+		asJson = pretty
+	}
+	if *debug {
+		verbose = debug
+	}
+
+	selector := ""
+	for i := 0; i < flag.NArg(); i++ {
+		selector += flag.Arg(i)
+	}
+
+	raw, err := parseReader(os.Stdin)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	found, err := selectValue(raw, selector)
+	if err != nil {
+		if *verbose {
+			log.Println(err)
+		}
+		os.Exit(1)
+	}
+	_ = asValues
+	str, err := formatForDisplay(found, *asJson, *asValues, *pretty)
+	if err != nil {
+		if *verbose {
+			log.Println(err)
+		}
+		os.Exit(1)
+	}
+
+	fmt.Println(str)
+
 }

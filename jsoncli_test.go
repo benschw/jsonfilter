@@ -1,20 +1,53 @@
 package main
 
 import (
+	"bytes"
+	"io"
 	"testing"
 )
 
-var b = []byte(`{"Name":"Wednesday","Age":6,"Height":2.05,"Adult":false,"Parents":["Gomez","Morticia"],"Address":{"Street":"0001 Cemetery Lane"}}`)
+func NewStubReader() io.Reader {
+	return bytes.NewReader([]byte(`
+		{
+			"myString":"asdf",
+			"myInt":6,
+			"myDecimal":2.05,
+			"myBool":false,
+			"myArray":[
+				"foo",
+				"bar"
+			],
+			"myObj":{
+				"baz":"bah"
+			},
+			"a":{
+				"ba":"afoo",
+				"bb":"abar",
+				"bc": [
+					"ca",
+					"cb",
+					[
+						"da",
+						{
+							"ea": "efoo"
+						}
+					]
+
+				]
+			}
+		}
+	`))
+}
 
 func Test_sliceSelector(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
-	expected := "Morticia"
-	selector := "Parents.1"
+	obj, _ := parseReader(NewStubReader())
+	expected := "bar"
+	selector := "myArray.1"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
+	found, err := formatForDisplay(i, false, false, false)
 
 	// then
 
@@ -29,13 +62,33 @@ func Test_sliceSelector(t *testing.T) {
 
 func Test_mapSelector(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
-	expected := "0001 Cemetery Lane"
-	selector := "Address.Street"
+	obj, _ := parseReader(NewStubReader())
+	expected := "bah"
+	selector := "myObj.baz"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
+	found, err := formatForDisplay(i, false, false, false)
+
+	// then
+
+	if err != nil {
+		t.Errorf("Parse Error: %s", err)
+	}
+
+	if found != expected {
+		t.Errorf("Found value wrong: %s", found)
+	}
+}
+func Test_deepSelector(t *testing.T) {
+	// given
+	obj, _ := parseReader(NewStubReader())
+	expected := "efoo"
+	selector := "a.bc.2.1.ea"
+
+	// when
+	i, _ := selectValue(obj, selector)
+	found, err := formatForDisplay(i, false, false, false)
 
 	// then
 
@@ -50,13 +103,13 @@ func Test_mapSelector(t *testing.T) {
 
 func Test_jsonSelector(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
-	expected := `["Gomez","Morticia"]`
-	selector := "Parents"
+	obj, _ := parseReader(NewStubReader())
+	expected := `["foo","bar"]`
+	selector := "myArray"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true)
+	found, err := formatForDisplay(i, true, false, false)
 
 	// then
 
@@ -71,13 +124,13 @@ func Test_jsonSelector(t *testing.T) {
 
 func Test_stringValue(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
-	expected := "Wednesday"
-	selector := "Name"
+	obj, _ := parseReader(NewStubReader())
+	expected := "asdf"
+	selector := "myString"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
+	found, err := formatForDisplay(i, false, false, false)
 	// then
 
 	if err != nil {
@@ -91,13 +144,13 @@ func Test_stringValue(t *testing.T) {
 
 func Test_stringJsonValue(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
-	expected := `"Wednesday"`
-	selector := "Name"
+	obj, _ := parseReader(NewStubReader())
+	expected := `"asdf"`
+	selector := "myString"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true)
+	found, err := formatForDisplay(i, true, false, false)
 	// then
 
 	if err != nil {
@@ -111,14 +164,14 @@ func Test_stringJsonValue(t *testing.T) {
 
 func Test_intValue(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
+	obj, _ := parseReader(NewStubReader())
 	expected := "6"
-	selector := "Age"
+	selector := "myInt"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
-	foundJson, err2 := formatForDisplay(i, true)
+	found, err := formatForDisplay(i, false, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false, false)
 
 	// then
 	if err != nil {
@@ -138,14 +191,14 @@ func Test_intValue(t *testing.T) {
 
 func Test_float64Value(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
+	obj, _ := parseReader(NewStubReader())
 	expected := "2.05"
-	selector := "Height"
+	selector := "myDecimal"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
-	foundJson, err2 := formatForDisplay(i, true)
+	found, err := formatForDisplay(i, false, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false, false)
 
 	// then
 	if err != nil {
@@ -165,14 +218,14 @@ func Test_float64Value(t *testing.T) {
 
 func Test_boolValue(t *testing.T) {
 	// given
-	obj, _ := parseBytes(b)
+	obj, _ := parseReader(NewStubReader())
 	expected := "false"
-	selector := "Adult"
+	selector := "myBool"
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false)
-	foundJson, err2 := formatForDisplay(i, true)
+	found, err := formatForDisplay(i, false, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false, false)
 
 	// then
 	if err != nil {
