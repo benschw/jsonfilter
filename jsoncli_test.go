@@ -47,7 +47,7 @@ func Test_sliceSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
+	found, err := formatForDisplay(i, false, false)
 
 	// then
 
@@ -68,7 +68,7 @@ func Test_mapSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
+	found, err := formatForDisplay(i, false, false)
 
 	// then
 
@@ -88,7 +88,7 @@ func Test_deepSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
+	found, err := formatForDisplay(i, false, false)
 
 	// then
 
@@ -109,7 +109,7 @@ func Test_jsonSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true, false, false)
+	found, err := formatForDisplay(i, true, false)
 
 	// then
 
@@ -130,7 +130,7 @@ func Test_stringValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
+	found, err := formatForDisplay(i, false, false)
 	// then
 
 	if err != nil {
@@ -150,7 +150,7 @@ func Test_stringJsonValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true, false, false)
+	found, err := formatForDisplay(i, true, false)
 	// then
 
 	if err != nil {
@@ -170,8 +170,8 @@ func Test_intValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false, false)
+	found, err := formatForDisplay(i, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false)
 
 	// then
 	if err != nil {
@@ -197,8 +197,8 @@ func Test_float64Value(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false, false)
+	found, err := formatForDisplay(i, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false)
 
 	// then
 	if err != nil {
@@ -224,8 +224,8 @@ func Test_boolValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false, false)
+	found, err := formatForDisplay(i, false, false)
+	foundJson, err2 := formatForDisplay(i, true, false)
 
 	// then
 	if err != nil {
