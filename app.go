@@ -32,72 +32,22 @@ func (a *App) run(selector string) (string, error) {
 		return "", err
 	}
 
-	var str string
+	var strs []string
 	if a.AsValues {
-		str, err = formatValuesForDisplay(found, a.AsJson, a.Pretty)
+		strs, err = formatValuesForDisplay(found, a.AsJson, a.Pretty)
+		if err != nil {
+			return "", err
+		}
 	} else {
-		str, err = formatForDisplay(found, a.AsJson, a.Pretty)
+		str, err := formatForDisplay(found, a.AsJson, a.Pretty)
+		if err != nil {
+			return "", err
+		}
+		strs = []string{str}
 	}
-	if err != nil {
-		return "", err
-	}
+	str := strings.Join(strs, "\n") + "\n"
 
 	return str, nil
-}
-
-func parseReader(in io.Reader) (interface{}, error) {
-	var obj interface{}
-
-	err := json.NewDecoder(in).Decode(&obj)
-
-	return obj, err
-}
-
-func formatForJsonDisplay(i interface{}, pretty bool) (string, error) {
-	var b []byte
-	var err error
-
-	if pretty {
-		b, err = json.MarshalIndent(i, "", "    ")
-	} else {
-		b, err = json.Marshal(i)
-	}
-	if err != nil {
-		return "", err
-	}
-	return string(b[:]), nil
-}
-func formatValuesForDisplay(i interface{}, asJson bool, pretty bool) (string, error) {
-	return formatForDisplay(i, asJson, pretty)
-}
-func formatForDisplay(i interface{}, asJson bool, pretty bool) (string, error) {
-	var str string
-	var err error = nil
-	if asJson {
-		str, err = formatForJsonDisplay(i, pretty)
-	} else {
-		switch v := i.(type) {
-		case int:
-			str, err = formatForJsonDisplay(i, false)
-		case float64:
-			str, err = formatForJsonDisplay(i, false)
-		case bool:
-			str, err = formatForJsonDisplay(i, false)
-		case string:
-			str = fmt.Sprintf("%s", v)
-		case []interface{}:
-			str = fmt.Sprintf("%v", v)
-		case map[string]interface{}:
-			str = fmt.Sprintf("%v", v)
-		default:
-			err = errors.New(fmt.Sprintf("Display error, unknown type: %+v", v))
-		}
-	}
-	if err != nil {
-		return "", nil
-	} else {
-		return fmt.Sprintf("%s\n", str), nil
-	}
 }
 
 func selectValue(obj interface{}, selector string) (interface{}, error) {
@@ -119,4 +69,85 @@ func selectValue(obj interface{}, selector string) (interface{}, error) {
 	default:
 		return "", errors.New(fmt.Sprintf("Bad selector, unknown type: %+v", v))
 	}
+}
+
+func formatValuesForDisplay(i interface{}, asJson bool, pretty bool) ([]string, error) {
+	strs := make([]string, 0)
+	switch v := i.(type) {
+	case []interface{}:
+		for _, val := range v {
+			str, err := formatForDisplay(val, asJson, pretty)
+			if err != nil {
+				return strs, err
+			}
+			strs = append(strs, str)
+		}
+	case map[string]interface{}:
+		for key, val := range v {
+			constructedVal := map[string]interface{}{
+				key: val,
+			}
+			str, err := formatForDisplay(constructedVal, asJson, pretty)
+			if err != nil {
+				return strs, err
+			}
+			strs = append(strs, str)
+		}
+
+	default:
+		return strs, errors.New(fmt.Sprintf("Bad selector, unknown type: %+v", v))
+	}
+
+	return strs, nil
+}
+func formatForDisplay(i interface{}, asJson bool, pretty bool) (string, error) {
+	var str string
+	var err error = nil
+	if asJson {
+		if pretty {
+			str, err = formatForPrettyJsonDisplay(i)
+		} else {
+			str, err = formatForJsonDisplay(i)
+		}
+	} else {
+		switch v := i.(type) {
+		case int:
+			str, err = formatForJsonDisplay(i)
+		case float64:
+			str, err = formatForJsonDisplay(i)
+		case bool:
+			str, err = formatForJsonDisplay(i)
+		case string:
+			str = fmt.Sprintf("%s", v)
+		case []interface{}:
+			str = fmt.Sprintf("%v", v)
+		case map[string]interface{}:
+			str = fmt.Sprintf("%v", v)
+		default:
+			err = errors.New(fmt.Sprintf("Display error, unknown type: %+v", v))
+		}
+	}
+	if err != nil {
+		return "", nil
+	} else {
+		return str, nil
+	}
+}
+
+func formatForJsonDisplay(i interface{}) (string, error) {
+	b, err := json.Marshal(i)
+	return string(b[:]), err
+}
+
+func formatForPrettyJsonDisplay(i interface{}) (string, error) {
+	b, err := json.MarshalIndent(i, "", "    ")
+	return string(b[:]), err
+}
+
+func parseReader(in io.Reader) (interface{}, error) {
+	var obj interface{}
+
+	err := json.NewDecoder(in).Decode(&obj)
+
+	return obj, err
 }
