@@ -17,7 +17,18 @@ func NewStubReader() io.Reader {
 				"bar"
 			],
 			"myObj":{
-				"baz":"bah"
+				"baz":"bah",
+				"caz":"cah"
+			},
+			"myMapCollection":{
+				"a":{
+					"id": "a",
+					"value": "foo"
+				},
+				"b":{
+					"id": "b",
+					"value": "bar"
+				}
 			},
 			"a":{
 				"ba":"afoo",

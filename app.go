@@ -16,6 +16,7 @@ type App struct {
 	AsJson   bool
 	Pretty   bool
 	AsValues bool
+	AsKeys   bool
 	Debug    bool
 	Input    io.Reader
 }
@@ -34,7 +35,7 @@ func (a *App) run(selector string) (string, error) {
 
 	var strs []string
 	if a.AsValues {
-		strs, err = formatValuesForDisplay(found, a.AsJson, a.Pretty)
+		strs, err = formatValuesForDisplay(found, a.AsKeys, a.AsJson, a.Pretty)
 		if err != nil {
 			return "", err
 		}
@@ -71,23 +72,32 @@ func selectValue(obj interface{}, selector string) (interface{}, error) {
 	}
 }
 
-func formatValuesForDisplay(i interface{}, asJson bool, pretty bool) ([]string, error) {
+func formatValuesForDisplay(i interface{}, asKeys bool, asJson bool, pretty bool) ([]string, error) {
 	strs := make([]string, 0)
 	switch v := i.(type) {
 	case []interface{}:
-		for _, val := range v {
-			str, err := formatForDisplay(val, asJson, pretty)
-			if err != nil {
-				return strs, err
+		for idx, val := range v {
+			var str string
+			if asKeys {
+				str = strconv.Itoa(idx)
+			} else {
+				var err error
+				str, err = formatForDisplay(val, asJson, pretty)
+				if err != nil {
+					return strs, err
+				}
 			}
 			strs = append(strs, str)
 		}
 	case map[string]interface{}:
 		for key, val := range v {
-			constructedVal := map[string]interface{}{
-				key: val,
+			var str string
+			var err error
+			if asKeys {
+				str, err = formatForDisplay(key, asJson, pretty)
+			} else {
+				str, err = formatForDisplay(val, asJson, pretty)
 			}
-			str, err := formatForDisplay(constructedVal, asJson, pretty)
 			if err != nil {
 				return strs, err
 			}

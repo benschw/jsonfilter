@@ -12,14 +12,9 @@ func Test_sliceSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
+	found, _ := formatForDisplay(i, false, false)
 
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
@@ -33,14 +28,9 @@ func Test_mapSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
+	found, _ := formatForDisplay(i, false, false)
 
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
@@ -53,14 +43,9 @@ func Test_deepSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
+	found, _ := formatForDisplay(i, false, false)
 
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
@@ -74,14 +59,9 @@ func Test_jsonSelector(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true, false)
+	found, _ := formatForDisplay(i, true, false)
 
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}

@@ -21,6 +21,7 @@ func main() {
 	asJson := flag.Bool("json", false, "display output as json")
 	pretty := flag.Bool("pretty", false, "display pretty json (sets -json=true)")
 	asValues := flag.Bool("values", false, "display each value of selected structure on its own line")
+	asKeys := flag.Bool("keys", false, "display each key or index of selected structure on its own line")
 	verbose := flag.Bool("v", false, "display errors")
 	debug := flag.Bool("vv", false, "display errors and info")
 
@@ -52,6 +53,7 @@ func main() {
 		AsJson:   *asJson,
 		Pretty:   *pretty,
 		AsValues: *asValues,
+		AsKeys:   *asKeys,
 		Debug:    *debug,
 		Input:    os.Stdin,
 	}

@@ -12,13 +12,9 @@ func Test_stringValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
+	found, _ := formatForDisplay(i, false, false)
+
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s:%s", expected, found)
 	}
@@ -32,13 +28,9 @@ func Test_stringJsonValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, true, false)
+	found, _ := formatForDisplay(i, true, false)
+
 	// then
-
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s:%s", expected, found)
 	}
@@ -52,17 +44,10 @@ func Test_intValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false)
+	found, _ := formatForDisplay(i, false, false)
+	foundJson, _ := formatForDisplay(i, true, false)
 
 	// then
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-	if err2 != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
@@ -79,17 +64,10 @@ func Test_float64Value(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false)
+	found, _ := formatForDisplay(i, false, false)
+	foundJson, _ := formatForDisplay(i, true, false)
 
 	// then
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-	if err2 != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
@@ -106,17 +84,10 @@ func Test_boolValue(t *testing.T) {
 
 	// when
 	i, _ := selectValue(obj, selector)
-	found, err := formatForDisplay(i, false, false)
-	foundJson, err2 := formatForDisplay(i, true, false)
+	found, _ := formatForDisplay(i, false, false)
+	foundJson, _ := formatForDisplay(i, true, false)
 
 	// then
-	if err != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-	if err2 != nil {
-		t.Errorf("Parse Error: %s", err)
-	}
-
 	if found != expected {
 		t.Errorf("Found value wrong: %s", found)
 	}
