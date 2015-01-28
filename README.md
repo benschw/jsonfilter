@@ -35,7 +35,6 @@ cli tool to grab values out of a json block
 			"playing with her headless Marie Antoinette doll",
 			"spiders"
 		]
-
 	}
 
 

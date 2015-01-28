@@ -1,0 +1,21 @@
+{
+	"Name": "Wednesday",
+	"Age": 6,
+	"Parents": [{
+		"Relation": "father",
+		"Name": "Gomez"
+	},{
+		"Relation": "mother",
+		"Name": "Morticia"
+	}],
+	"Address": {
+		"Street": "0001 Cemetery Lane",
+		"City": "New York",
+		"State": "New York"
+	},
+	"Hobbies": [
+		"homicide",
+		"playing with her headless Marie Antoinette doll",
+		"spiders"
+	]
+}

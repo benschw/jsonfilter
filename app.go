@@ -32,7 +32,9 @@ func (a *App) run(selector string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	if found == nil {
+		return "", errors.New(fmt.Sprint("Selector didn't find anything"))
+	}
 	var strs []string
 	if a.AsValues {
 		strs, err = formatValuesForDisplay(found, a.AsKeys, a.AsJson, a.Pretty)
@@ -62,13 +64,13 @@ func selectValue(obj interface{}, selector string) (interface{}, error) {
 	case []interface{}:
 		i, err := strconv.Atoi(parts[0])
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 		return selectValue(v[i], strings.Join(parts[1:], "."))
 	case map[string]interface{}:
 		return selectValue(v[parts[0]], strings.Join(parts[1:], "."))
 	default:
-		return "", errors.New(fmt.Sprintf("Bad selector, unknown type: %+v", v))
+		return nil, errors.New(fmt.Sprintf("Bad selector, unknown type: %+v", v))
 	}
 }
 
