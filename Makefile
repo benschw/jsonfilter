@@ -11,4 +11,4 @@ build:
 
 test:
 	go test
-	./cli-unitw.sh *_test.sh
+	./cli-unitw.sh *_test.md
