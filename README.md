@@ -1,18 +1,11 @@
 # jsonfilter
 
-cli tool to grab values out of a json block
+`jsonfilter` is an utility for filtering and selecting values from a json object.
 
 
 
-## example
 
-	$ cat data.json | jsonfilter Hobbies.0
-	homicide
-	$ cat data.json | jsonfilter Address.Street
-	0001 Cemetery Lane
-
-
-### data.json
+### wednesday.json
 
 
 	{
@@ -38,46 +31,27 @@ cli tool to grab values out of a json block
 	}
 
 
-## more examples
+## suite: jsonfilter examples
+### test: should exit 1 when selector is NOT found
+#### when:
+	cat ./wednesday.json | ./jsonfilter Flub > /dev/null || echo not found
 
-	$ cat data.json | jsonfilter Address
-	{"Street":"0001 Cemetery Lane","City": "New York","State":"New York"}
-
-	$ cat data.json | jsonfilter -pretty Address
-	{
-		"Street": "0001 Cemetery Lane",
-		"City": "New York",
-		"State": "New York"
-	}
-
-
-	$ cat data.json | jsonfilter Hobbies
-	["homicide","playing with her headless Marie Antoinette doll","spiders"]
-
-	$ cat data.json | jsonfilter -values Hobbies
-	homicide
-	playing with her headless Marie Antoinette doll
-	spiders
-
-	$ cat data.json | jsonfilter -json -values Parents | xargs jsonfilter Name
-	Gomez
-	Morticia
-
-
-	$ cat data.json | jsonfilter -json Address | jsonfilter Street
-	0001 Cemetery Lane
-
-
-	$ cat data.json | jsonfilter Address && echo found
-	found
-
-	$ cat data.json | jsonfilter Foo || echo not found
+#### then:
 	not found
 
 
-	$ cat data.json | jsonfilter -json Address.Street
-	"0001 Cemetery Lane"
+### test: should drill down when using compound selector
+#### when:
+	cat ./wednesday.json | ./jsonfilter Address.Street
 
+#### then:
+	0001 Cemetery Lane
 
+### test: -values should output values in an array
+#### when:
+	cat ./wednesday.json | ./jsonfilter -values Hobbies
 
-
+#### then:
+	homicide
+	playing with her headless Marie Antoinette doll
+	spiders

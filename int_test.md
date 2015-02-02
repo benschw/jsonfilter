@@ -47,9 +47,8 @@
 
 ### test: should be able to filter object multiple times
 #### when:
-
 	JSON=$(cat ./wednesday.json | ./jsonfilter -values -json Parents)
-
+	
 	while read -r parent; do
 		echo "$parent" | ./jsonfilter Name
 	done <<< "$JSON"
@@ -61,7 +60,6 @@
 
 ### test: should be able to filter object multiple times with pipes
 #### when:
-
 	cat ./wednesday.json | ./jsonfilter -json Address | ./jsonfilter Street
 
 #### then:
@@ -70,7 +68,6 @@
 
 ### test: should exit 0 when selector is found
 #### when:
-
 	cat ./wednesday.json | ./jsonfilter Address > /dev/null && echo found
 
 #### then:
@@ -78,7 +75,6 @@
 
 ### test: should exit 1 when selector is NOT found
 #### when:
-
 	cat ./wednesday.json | ./jsonfilter Flub > /dev/null || echo not found
 
 #### then:
@@ -87,7 +83,6 @@
 
 ### test: should drill down when using compound selector
 #### when:
-
 	cat ./wednesday.json | ./jsonfilter Address.Street
 
 #### then:
