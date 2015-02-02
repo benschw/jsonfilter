@@ -6,7 +6,8 @@
 
 download the bin to `/usr/local/bin`
 
-	wget -qO- https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.gz | gunzip > /usr/local/bin/jsonfilter
+	wget -qO- https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.gz \
+	| gunzip > /usr/local/bin/jsonfilter
 
 
 or get the `.deb`
