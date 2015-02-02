@@ -2,9 +2,21 @@
 
 `jsonfilter` is an utility for filtering and selecting values from a json object.
 
+## Install
+
+download the bin to `/usr/local/bin`
+	wget -qO- https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.gz | gunzip > /usr/local/bin/jsonfilter
+
+
+or get the `.deb`
+
+	wget https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.deb
+	sudo dpkg --install jsonfilter.deb
 
 
 
+## Examples 
+examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit).
 ### wednesday.json
 
 
