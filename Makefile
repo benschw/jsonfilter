@@ -22,7 +22,11 @@ clean:
 	rm -rf ./.cli-unit
 	rm -rf build
 
-packages: clean build deb
+packages: clean build deb gzip
+
+gzip:
+	cp build/root/usr/bin/jsonfilter build/output/jsonfilter
+	gzip build/output/jsonfilter
 
 # sudo apt-get install ruby-dev build-essential
 # sudo gem install fpm
