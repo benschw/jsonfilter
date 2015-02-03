@@ -20,6 +20,7 @@ build:
 	mkdir -p build/output
 	mkdir -p build/root/usr/bin
 	go build -o build/root/usr/bin/jsonfilter
+	go build 
 
 install:
 	install -t /usr/bin build/root/usr/bin/jsonfilter
