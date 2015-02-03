@@ -8,7 +8,7 @@ deps:
 
 test:
 	go test
-	./cli-unitw.sh README.md *_test.md
+	/bin/bash ./cli-unitw.sh README.md *_test.md
 
 build:
 	mkdir -p build/output
