@@ -17,6 +17,12 @@ or get the `.deb`
 	sudo dpkg --install jsonfilter.deb
 
 
+or from the Package Repository (for debian machines like ubuntu)
+
+	echo "deb http://dl.bintray.com/benschw/deb wheezy main" | sudo tee -a /etc/apt/sources.list.d/benschw.list
+	sudo apt-get update
+	sudo apt-get install jsonfilter
+
 
 ## Examples 
 examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit).
