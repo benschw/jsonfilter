@@ -1,6 +1,6 @@
 ### test: -json should work with objects
 #### when:
-	cat ./wednesday.json | ./jsonfilter -json Address
+	cat ./wednesday.json | ./build/output/jsonfilter -json Address
 
 #### then:
 	{"City":"New York","State":"New York","Street":"0001 Cemetery Lane"}
@@ -8,7 +8,7 @@
 
 ### test: -json should work with arrays
 #### when:
-	cat ./wednesday.json | ./jsonfilter -json Hobbies
+	cat ./wednesday.json | ./build/output/jsonfilter -json Hobbies
 
 #### then:
 	["homicide","playing with her headless Marie Antoinette doll","spiders"]
@@ -16,7 +16,7 @@
 
 ### test: -pretty should make pretty json output
 #### when:
-	cat ./wednesday.json | ./jsonfilter -pretty Address
+	cat ./wednesday.json | ./build/output/jsonfilter -pretty Address
 
 #### then:
 	{
