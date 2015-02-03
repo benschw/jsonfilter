@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/benschw/jsonfilter/status.png)](https://drone.io/github.com/benschw/jsonfilter/latest)
+
 # jsonfilter
 
 cli tool to grab values out of a json block
