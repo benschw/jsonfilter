@@ -51,7 +51,7 @@ examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit
 ## suite: jsonfilter examples
 ### test: should exit 0 when selector is found
 #### when:
-	cat ./wednesday.json | ./jsonfilter Address.Street > /dev/null || echo found
+	cat ./wednesday.json | ./jsonfilter Address.Street > /dev/null && echo found
 
 #### then:
 	found

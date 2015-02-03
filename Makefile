@@ -14,7 +14,7 @@ deps:
 
 test:
 	go test
-	/bin/bash ./cli-unitw.sh README.md *_test.md
+	/bin/bash ./cli-unitw.sh -v README.md *_test.md
 
 build:
 	mkdir -p build/output
