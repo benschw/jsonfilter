@@ -8,14 +8,13 @@
 
 download the bin to `/usr/local/bin`
 
-	wget -qO- \
-	https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter-`uname`-`uname -m`.gz \
-	| gunzip > /usr/local/bin/jsonfilter
+	wget https://drone.io/github.com/benschw/jsonfilter/files/jsonfilter-`uname`-`uname -m`.gz 
+	gunzip jsonfilter-`uname`-`uname -m`.gz > /usr/local/bin/jsonfilter
 
 
 or get the `.deb`
 
-	wget https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter-amd64.deb
+	wget https://drone.io/github.com/benschw/jsonfilter/files/jsonfilter-amd64.deb
 	sudo dpkg --install jsonfilter.deb
 
 
