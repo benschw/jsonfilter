@@ -1,6 +1,12 @@
 VERSION := $(shell cat VERSION)
 ITTERATION := $(shell date +%s)
 
+# # drone build
+# sudo apt-get update
+# sudo apt-get install ruby-dev build-essential rubygems wget curl
+# sudo gem install fpm
+# make deps test build deb gzip
+
 all: build
 
 deps:
@@ -8,12 +14,13 @@ deps:
 
 test:
 	go test
-	./cli-unitw.sh README.md *_test.md
+	/bin/bash ./cli-unitw.sh -v README.md *_test.md
 
 build:
 	mkdir -p build/output
 	mkdir -p build/root/usr/bin
 	go build -o build/root/usr/bin/jsonfilter
+	go build 
 
 install:
 	install -t /usr/bin build/root/usr/bin/jsonfilter

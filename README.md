@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/benschw/jsonfilter/status.png)](https://drone.io/github.com/benschw/jsonfilter/latest)
+
 # jsonfilter
 
 `jsonfilter` is an utility for filtering and selecting values from a json object.
@@ -53,12 +55,12 @@ examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit
 
 
 ## suite: jsonfilter examples
-### test: should exit 1 when selector is NOT found
+### test: should exit 0 when selector is found
 #### when:
-	cat ./wednesday.json | ./jsonfilter Flub > /dev/null || echo not found
+	cat ./wednesday.json | ./jsonfilter Address.Street > /dev/null && echo found
 
 #### then:
-	not found
+	found
 
 
 ### test: should drill down when using compound selector
