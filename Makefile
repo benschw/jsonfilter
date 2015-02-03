@@ -22,7 +22,8 @@ int-test:
 build:
 	mkdir -p build/output
 	mkdir -p build/root/usr/bin
-	go build -o build/root/usr/bin/jsonfilter
+	go build -o build/output/jsonfilter
+	cp build/output/jsonfilter build/root/usr/bin/jsonfilter
 
 install:
 	install -t /usr/bin build/root/usr/bin/jsonfilter
