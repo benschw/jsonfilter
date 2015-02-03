@@ -9,19 +9,19 @@
 download the bin to `/usr/local/bin`
 
 	wget -qO- \
-	https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.gz \
+	https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter-`uname`-`uname -m`.gz \
 	| gunzip > /usr/local/bin/jsonfilter
 
 
 or get the `.deb`
 
-	wget https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter.deb
+	wget https://drone.io/github.com/benschw/jsonfilter/files/build/output/jsonfilter-amd64.deb
 	sudo dpkg --install jsonfilter.deb
 
 
 or from the Package Repository (for debian machines like ubuntu)
 
-	echo "deb http://dl.bintray.com/benschw/deb wheezy main" | sudo tee -a /etc/apt/sources.list.d/benschw.list
+	sudo add-apt-repository "deb http://dl.bintray.com/benschw/deb wheezy main"
 	sudo apt-get update
 	sudo apt-get install jsonfilter
 
@@ -57,7 +57,7 @@ examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit
 ## suite: jsonfilter examples
 ### test: should exit 0 when selector is found
 #### when:
-	cat ./wednesday.json | ./jsonfilter Address.Street > /dev/null && echo found
+	cat ./wednesday.json | ./build/output/jsonfilter Address.Street > /dev/null && echo found
 
 #### then:
 	found
@@ -65,14 +65,14 @@ examples guaranteed up to date by [cli-unit](https://github.com/benschw/cli-unit
 
 ### test: should drill down when using compound selector
 #### when:
-	cat ./wednesday.json | ./jsonfilter Address.Street
+	cat ./wednesday.json | ./build/output/jsonfilter Address.Street
 
 #### then:
 	0001 Cemetery Lane
 
 ### test: -values should output values in an array
 #### when:
-	cat ./wednesday.json | ./jsonfilter -values Hobbies
+	cat ./wednesday.json | ./build/output/jsonfilter -values Hobbies
 
 #### then:
 	homicide

@@ -28,7 +28,7 @@
 
 ### test: -values should output values in an array
 #### when:
-	cat ./wednesday.json | ./jsonfilter -values Hobbies
+	cat ./wednesday.json | ./build/output/jsonfilter -values Hobbies
 
 #### then:
 	homicide
@@ -37,7 +37,7 @@
 
 ### test: -values -json should output json values in an array
 #### when:
-	cat ./wednesday.json | ./jsonfilter -values -json Hobbies
+	cat ./wednesday.json | ./build/output/jsonfilter -values -json Hobbies
 
 #### then:
 	"homicide"
@@ -47,10 +47,10 @@
 
 ### test: should be able to filter object multiple times
 #### when:
-	JSON=$(cat ./wednesday.json | ./jsonfilter -values -json Parents)
+	JSON=$(cat ./wednesday.json | ./build/output/jsonfilter -values -json Parents)
 	
 	while read -r parent; do
-		echo "$parent" | ./jsonfilter Name
+		echo "$parent" | ./build/output/jsonfilter Name
 	done <<< "$JSON"
 
 #### then:
@@ -60,7 +60,7 @@
 
 ### test: should be able to filter object multiple times with pipes
 #### when:
-	cat ./wednesday.json | ./jsonfilter -json Address | ./jsonfilter Street
+	cat ./wednesday.json | ./build/output/jsonfilter -json Address | ./build/output/jsonfilter Street
 
 #### then:
 	0001 Cemetery Lane
@@ -68,7 +68,7 @@
 
 ### test: should exit 0 when selector is found
 #### when:
-	cat ./wednesday.json | ./jsonfilter Address > /dev/null && echo found
+	cat ./wednesday.json | ./build/output/jsonfilter Address > /dev/null && echo found
 
 #### then:
 	found
@@ -76,7 +76,7 @@
 ### test-skip: should exit 1 when selector is NOT found 
 make on drone is failing because it inherits this code... 
 #### when:
-	cat ./wednesday.json | ./jsonfilter Flub > /dev/null || echo not found
+	cat ./wednesday.json | ./build/output/jsonfilter Flub > /dev/null || echo not found
 
 #### then:
 	not found
@@ -84,7 +84,7 @@ make on drone is failing because it inherits this code...
 
 ### test: should drill down when using compound selector
 #### when:
-	cat ./wednesday.json | ./jsonfilter Address.Street
+	cat ./wednesday.json | ./build/output/jsonfilter Address.Street
 
 #### then:
 	0001 Cemetery Lane

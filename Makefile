@@ -12,15 +12,17 @@ all: build
 deps:
 	go get -t -v ./...
 
-test:
+test: unit-test build int-test
+	
+unit-test:
 	go test
+int-test:
 	/bin/bash ./cli-unitw.sh -v README.md *_test.md
 
 build:
 	mkdir -p build/output
 	mkdir -p build/root/usr/bin
 	go build -o build/root/usr/bin/jsonfilter
-	go build 
 
 install:
 	install -t /usr/bin build/root/usr/bin/jsonfilter
@@ -31,17 +33,13 @@ clean:
 
 packages: clean build deb gzip
 
-gzip:
-	cp build/root/usr/bin/jsonfilter build/output/jsonfilter
-	gzip build/output/jsonfilter
-
 # sudo apt-get install ruby-dev build-essential
 # sudo gem install fpm
 # 
 # creates a debian package
 # `sudo dpkg -i jsonfilter.deb`
 deb:
-	fpm -s dir -t deb -n jsonfilter -v $(VERSION) -p build/output/jsonfilter.deb \
+	fpm -s dir -t deb -n jsonfilter -v $(VERSION) -p build/output/jsonfilter-amd64.deb \
 		--deb-priority optional \
 		--category util \
 		--force \
@@ -54,7 +52,7 @@ deb:
 		--vendor "fliglio.com" -a amd64 \
 		build/root/=/
 
-dist: deps golang-crosscompile golang-buildsetup
+gzip: deps golang-crosscompile golang-buildsetup
 	source golang-crosscompile/crosscompile.bash; \
 	mkdir -p release; \
 	go-darwin-386 build -o jsonfilter; \
