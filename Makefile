@@ -1,3 +1,4 @@
+SHELL=/bin/bash
 VERSION := $(shell cat VERSION)
 ITTERATION := $(shell date +%s)
 
@@ -74,3 +75,4 @@ golang-buildsetup: golang-crosscompile
 
 golang-crosscompile:
 	git clone https://github.com/davecheney/golang-crosscompile.git
+
