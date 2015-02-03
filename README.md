@@ -9,7 +9,9 @@
 download the bin to `/usr/local/bin`
 
 	wget https://drone.io/github.com/benschw/jsonfilter/files/jsonfilter-`uname`-`uname -m`.gz 
-	gunzip jsonfilter-`uname`-`uname -m`.gz > /usr/local/bin/jsonfilter
+	gunzip jsonfilter-`uname`-`uname -m`.gz 
+	chmod +x jsonfilter-`uname`-`uname -m`.gz 
+	sudo mv jsonfilter-`uname`-`uname -m` /usr/local/bin/jsonfilter
 
 
 or get the `.deb`
