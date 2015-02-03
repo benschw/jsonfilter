@@ -1,6 +1,12 @@
 VERSION := $(shell cat VERSION)
 ITTERATION := $(shell date +%s)
 
+# # drone build
+# sudo apt-get update
+# sudo apt-get install ruby-dev build-essential rubygems wget curl
+# sudo gem install fpm
+# make deps test build deb gzip
+
 all: build
 
 deps:
