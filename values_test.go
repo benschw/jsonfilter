@@ -52,13 +52,18 @@ func Test_MapValues(t *testing.T) {
 	obj, _ := parseReader(NewStubReader())
 	expected := []string{"bah", "cah"}
 	expectedJson := []string{`"bah"`, `"cah"`}
+	sort.Strings(expected)
+	sort.Strings(expectedJson)
 	selector := "myObj"
 
 	// when
 	i, _ := selectValue(obj, selector)
 	found, _ := formatValuesForDisplay(i, false, false, false)
 	foundJson, _ := formatValuesForDisplay(i, false, true, false)
+
 	// then
+	sort.Strings(found)
+	sort.Strings(foundJson)
 
 	if !reflect.DeepEqual(found, expected) {
 		t.Errorf("Found value wrong: %s:%s", expected, found)
