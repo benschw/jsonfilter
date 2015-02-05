@@ -33,14 +33,14 @@ clean:
 	rm -rf ./.cli-unit
 	rm -rf build
 
-packages: clean build deb gzip
+packages: build deb-amd64 gzip
 
 # sudo apt-get install ruby-dev build-essential
 # sudo gem install fpm
 # 
 # creates a debian package
 # `sudo dpkg -i jsonfilter.deb`
-deb:
+deb-amd64:
 	fpm -s dir -t deb -n jsonfilter -v $(VERSION) -p build/output/jsonfilter-amd64.deb \
 		--deb-priority optional \
 		--category util \
