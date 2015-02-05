@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Jsonfilter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+ 
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <a href="https://github.com/benschw/jsonfilter"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>jsonfilter</h1>
+        <p>
+          Jsonfilter is a cli tool for filtering and selecting values from json objects.</a>
+        </p>
+
+
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Release</div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a class="btn btn-success" role="button" href="https://github.com/benschw/jsonfilter/releases/tag/0.1.1">jsonfilter 0.1.1 release</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Getting Started</div>
+        <div class="panel-body">
+          <p>Binaries are available for x86 and amd64 flavors of Darwin and Linux</p>
+          <pre>
+    wget -qO- https://github.com/benschw/jsonfilter/releases/download/0.1.1/jsonfilter-`uname`-`uname -m`-0.1.1.gz | \
+      gunzip > /usr/local/bin/jsonfilter
+    chmod +x /usr/local/bin/jsonfilter
+          </pre>
+
+          <p>Pretty up a json object</p>
+          <pre>    
+  curl -s "http://api.openweathermap.org/data/2.5/weather?units=imperial&q=Austin,Texas" | jsonfilter -pretty
+  {
+      "base": "cmc stations",
+      "clouds": {
+          "all": 48
+      },
+      "cod": 200,
+      "coord": {
+          "lat": 30.27,
+          "lon": -97.74
+      },
+      "dt": 1.423154714e+09,
+      "id": 4.671654e+06,
+      "main": {
+          "grnd_level": 1018.67,
+          "humidity": 74,
+          "pressure": 1018.67,
+          "sea_level": 1044.98,
+          "temp": 44.37,
+          "temp_max": 44.37,
+          "temp_min": 44.37
+      },
+      "name": "Austin",
+      "sys": {
+          "country": "United States of America",
+          "message": 0.0261,
+          "sunrise": 1.423142315e+09,
+          "sunset": 1.423181483e+09
+      },
+      "weather": [
+          {
+              "description": "scattered clouds",
+              "icon": "03d",
+              "id": 802,
+              "main": "Clouds"
+          }
+      ],
+      "wind": {
+          "deg": 352.5,
+          "speed": 13.37
+      }
+  }
+
+          </pre>
+
+          <p>
+            Filter a sub object
+          </p>
+          <pre>
+  curl -s "http://api.openweathermap.org/data/2.5/weather?units=imperial&q=Austin,Texas" | jsonfilter -json coord
+  {"lat":30.27,"lon":-97.74}
+          </pre>
+
+          <p>
+            Get a single value
+          </p>
+          <pre>
+  curl -s "http://api.openweathermap.org/data/2.5/weather?units=imperial&q=Austin,Texas" | jsonfilter main.temp
+  44.37
+          </pre>
+
+          <p>
+            <em>More examples on the <a href="https://github.com/benschw/jsonfilter">github project page</a></em>
+          </p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
