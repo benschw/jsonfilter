@@ -4,7 +4,7 @@
 
 `jsonfilter` is an utility for filtering and selecting values from a json object.
 
-* [Download](http://txt.fliglio.com/jsonfilter/)
+- [Latest Release](http://txt.fliglio.com/jsonfilter/)
 
 ## Install
 
