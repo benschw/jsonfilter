@@ -8,11 +8,11 @@
 
 ## Install
 
-download the bin to `/usr/local/bin`
+download (latest successful build from drone.io) to `/usr/local/bin`
 
 	wget https://drone.io/github.com/benschw/jsonfilter/files/jsonfilter-`uname`-`uname -m`.gz 
 	gunzip jsonfilter-`uname`-`uname -m`.gz 
-	chmod +x jsonfilter-`uname`-`uname -m`.gz 
+	chmod +x jsonfilter-`uname`-`uname -m`
 	sudo mv jsonfilter-`uname`-`uname -m` /usr/local/bin/jsonfilter
 
 
