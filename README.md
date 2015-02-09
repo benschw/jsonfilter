@@ -4,6 +4,8 @@
 
 `jsonfilter` is an utility for filtering and selecting values from a json object.
 
+* (Download)[http://txt.fliglio.com/jsonfilter/]
+
 ## Install
 
 download the bin to `/usr/local/bin`
